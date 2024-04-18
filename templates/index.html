@@ -1,0 +1,512 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Wongnok รวมเมนูสูตรอาหาร</title>
+
+    <!-- ##### Include CSS ##### -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <!-- Core Stylesheet -->
+    <link rel="stylesheet" href="../static/css/style.css">
+
+    <!-- ##### Include Font ##### -->
+
+  </head>
+  <body>
+    <!-- ##### Header Area Start ##### -->
+    <nav class="navbar navbar-expand-lg" style="background-color: #e3f2fd;">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{{ url_for('index')}}">
+                <img src="../static/img/bootstrap-logo.svg" alt="Logo" width="30" height="24" class="align-text-top">
+                Wongnok
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+                <div class="collapse navbar-collapse" id="navbarScroll">
+                  <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+                    <li class="nav-item">
+                      <a class="nav-link active" aria-current="page" href="{{ url_for('index')}}">หน้าแรก</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="{{ url_for('search')}}">ค้นหาสูตรอาหาร</a>
+                    </li>
+                    {% if 'loggedin' in session: %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('myrecipe')}}"> สูตรอาหารของฉัน</a>
+                      </li>
+                    {% endif %}
+                  </ul>
+                  <ul class="navbar-nav ml-auto" style="--bs-scroll-height: 100px;">
+                    {% if 'loggedin' in session: %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="../static/img/bootstrap-logo.svg" alt="Logo" width="30" height="24" class="align-text-top">
+                            {{ session['email'] }}
+                        </a>
+                      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{{ url_for('myrecipe')}}">My Recipe</a>
+                        <a class="dropdown-item" href="{{url_for('logout')}}">Log Out</a>
+                      </div>
+                    </li>
+                    {% else: %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('login')}}">
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            Log in
+                        </a>
+                      </li>
+                    {% endif %}   
+                    
+                  </ul>
+                </div>
+              </div>
+        </div>
+    </nav>
+    <!-- ##### Header Area End ##### -->
+
+    <!-- ##### Search Area Start ##### -->
+    <section class="hero-area section-padding-80-0">
+        <div class="hero-slides owl-carousel">
+            <div class="single-hero-slide bg-img" style="background-image: url(../static/img/bg1.jpg);">
+                <div class="container h-100">
+                    <div class="row h-100 align-items-center">
+                        <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+                            <div class="hero-slides-content" data-animation="fadeInUp" data-delay="100ms">
+                                <h2 data-animation="fadeInUp" data-delay="300ms">Delicios Homemade Burger</h2>
+                                <p data-animation="fadeInUp" data-delay="700ms">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras tristique nisl vitae luctus sollicitudin. Fusce consectetur sem eget dui tristique, ac posuere arcu varius.</p>
+
+                                <form class="d-flex" role="search" action="{{ url_for('search')}}" method="POST">
+                                    <input class="form-control me-2" type="search" placeholder="ค้นหาสูตรอาหาร" id="word_search" name="word_search" aria-label="Search">
+                                    <button class="btn delicious-btn" type="submit">ค้นหา</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ##### Search Area End ##### -->
+
+    <!-- ##### Small Receipe Area Start ##### -->
+    <section class="small-receipe-area section-padding-80-0">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="section-heading">
+                        <h3>สูตรอาหารยอดนิยม</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+
+                <!-- Small Receipe Area -->
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="single-small-receipe-area d-flex">
+                        <!-- Receipe Thumb -->
+                        <div class="receipe-thumb">
+                            <img src="../static/img/bg-img/sr1.jpg" alt="">
+                        </div>
+                        <!-- Receipe Content -->
+                        <div class="receipe-content">
+                            <span>January 04, 2018</span>
+                            <a href="receipe-post.html">
+                                <h5>Homemade italian pasta</h5>
+                            </a>
+                            <div class="ratings">
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                            </div>
+                            <p>2 Comments</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Small Receipe Area -->
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="single-small-receipe-area d-flex">
+                        <!-- Receipe Thumb -->
+                        <div class="receipe-thumb">
+                            <img src="../static/img/bg-img/sr2.jpg" alt="">
+                        </div>
+                        <!-- Receipe Content -->
+                        <div class="receipe-content">
+                            <span>January 04, 2018</span>
+                            <a href="receipe-post.html">
+                                <h5>Baked Bread</h5>
+                            </a>
+                            <div class="ratings">
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                            </div>
+                            <p>2 Comments</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Small Receipe Area -->
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="single-small-receipe-area d-flex">
+                        <!-- Receipe Thumb -->
+                        <div class="receipe-thumb">
+                            <img src="../static/img/bg-img/sr3.jpg" alt="">
+                        </div>
+                        <!-- Receipe Content -->
+                        <div class="receipe-content">
+                            <span>January 04, 2018</span>
+                            <a href="receipe-post.html">
+                                <h5>Scalops on salt</h5>
+                            </a>
+                            <div class="ratings">
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                            </div>
+                            <p>2 Comments</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Small Receipe Area -->
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="single-small-receipe-area d-flex">
+                        <!-- Receipe Thumb -->
+                        <div class="receipe-thumb">
+                            <img src="../static/img/bg-img/sr4.jpg" alt="">
+                        </div>
+                        <!-- Receipe Content -->
+                        <div class="receipe-content">
+                            <span>January 04, 2018</span>
+                            <a href="receipe-post.html">
+                                <h5>Fruits on plate</h5>
+                            </a>
+                            <div class="ratings">
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                            </div>
+                            <p>2 Comments</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Small Receipe Area -->
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="single-small-receipe-area d-flex">
+                        <!-- Receipe Thumb -->
+                        <div class="receipe-thumb">
+                            <img src="../static/img/bg-img/sr5.jpg" alt="">
+                        </div>
+                        <!-- Receipe Content -->
+                        <div class="receipe-content">
+                            <span>January 04, 2018</span>
+                            <a href="receipe-post.html">
+                                <h5>Macaroons</h5>
+                            </a>
+                            <div class="ratings">
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                            </div>
+                            <p>2 Comments</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Small Receipe Area -->
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="single-small-receipe-area d-flex">
+                        <!-- Receipe Thumb -->
+                        <div class="receipe-thumb">
+                            <img src="../static/img/bg-img/sr6.jpg" alt="">
+                        </div>
+                        <!-- Receipe Content -->
+                        <div class="receipe-content">
+                            <span>January 04, 2018</span>
+                            <a href="receipe-post.html">
+                                <h5>Chocolate tart</h5>
+                            </a>
+                            <div class="ratings">
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                            </div>
+                            <p>2 Comments</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Small Receipe Area -->
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="single-small-receipe-area d-flex">
+                        <!-- Receipe Thumb -->
+                        <div class="receipe-thumb">
+                            <img src="../static/img/bg-img/sr7.jpg" alt="">
+                        </div>
+                        <!-- Receipe Content -->
+                        <div class="receipe-content">
+                            <span>January 04, 2018</span>
+                            <a href="receipe-post.html">
+                                <h5>Berry Desert</h5>
+                            </a>
+                            <div class="ratings">
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                            </div>
+                            <p>2 Comments</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Small Receipe Area -->
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="single-small-receipe-area d-flex">
+                        <!-- Receipe Thumb -->
+                        <div class="receipe-thumb">
+                            <img src="../static/img/bg-img/sr8.jpg" alt="">
+                        </div>
+                        <!-- Receipe Content -->
+                        <div class="receipe-content">
+                            <span>January 04, 2018</span>
+                            <a href="receipe-post.html">
+                                <h5>Zucchini Grilled on peper</h5>
+                            </a>
+                            <div class="ratings">
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                            </div>
+                            <p>2 Comments</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Small Receipe Area -->
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="single-small-receipe-area d-flex">
+                        <!-- Receipe Thumb -->
+                        <div class="receipe-thumb">
+                            <img src="../static/img/bg-img/sr9.jpg" alt="">
+                        </div>
+                        <!-- Receipe Content -->
+                        <div class="receipe-content">
+                            <span>January 04, 2018</span>
+                            <a href="receipe-post.html">
+                                <h5>Chicken Salad</h5>
+                            </a>
+                            <div class="ratings">
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                            </div>
+                            <p>2 Comments</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ##### Small Receipe Area End ##### -->
+
+     <!-- ##### CTA Area Start ##### -->
+     <section class="cta-area bg-img bg-overlay" style="background-image: url(../static/img/bg2.jpg);">
+        <div class="container h-100">
+            <div class="row h-100 align-items-center">
+                <div class="col-12">
+                    <!-- Cta Content -->
+                    <div class="cta-content text-center">
+                        <h2>Gluten Free Receipies</h2>
+                        <p>Fusce nec ante vitae lacus aliquet vulputate. Donec scelerisque accumsan molestie. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Cras sed accumsan neque. Ut vulputate, lectus vel aliquam congue, risus leo elementum nibh</p>
+                        <a href="#" class="btn delicious-btn">ค้นหาสูตรอาหารทั้งหมด</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ##### CTA Area End ##### -->
+
+        <!-- ##### Recipe Category Area Start ##### -->
+        <section class="best-receipe-area section-padding-80-0">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="section-heading">
+                            <h3>หมวดหมู่อาหาร</h3>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="row">
+                    <!-- Single Best Receipe Area -->
+                    <div class="col-12 col-sm-6 col-lg-4">
+                        <div class="single-best-receipe-area mb-30">
+                            <img src="../static/img/bg-img/r1.jpg" alt="">
+                            <div class="receipe-content">
+                                <a href="receipe-post.html">
+                                    <h5>Sushi Easy Receipy</h5>
+                                </a>
+                                <div class="ratings">
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <!-- Single Best Receipe Area -->
+                    <div class="col-12 col-sm-6 col-lg-4">
+                        <div class="single-best-receipe-area mb-30">
+                            <img src="../static/img/bg-img/r2.jpg" alt="">
+                            <div class="receipe-content">
+                                <a href="receipe-post.html">
+                                    <h5>Homemade Burger</h5>
+                                </a>
+                                <div class="ratings">
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <!-- Single Best Receipe Area -->
+                    <div class="col-12 col-sm-6 col-lg-4">
+                        <div class="single-best-receipe-area mb-30">
+                            <img src="../static/img/bg-img/r3.jpg" alt="">
+                            <div class="receipe-content">
+                                <a href="receipe-post.html">
+                                    <h5>Vegan Smoothie</h5>
+                                </a>
+                                <div class="ratings">
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <!-- Single Best Receipe Area -->
+                    <div class="col-12 col-sm-6 col-lg-4">
+                        <div class="single-best-receipe-area mb-30">
+                            <img src="../static/img/bg-img/r4.jpg" alt="">
+                            <div class="receipe-content">
+                                <a href="receipe-post.html">
+                                    <h5>Calabasa soup</h5>
+                                </a>
+                                <div class="ratings">
+                                    <i class="bi bi-arrow-down-circle-fill"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <!-- Single Best Receipe Area -->
+                    <div class="col-12 col-sm-6 col-lg-4">
+                        <div class="single-best-receipe-area mb-30">
+                            <img src="../static/img/bg-img/r5.jpg" alt="">
+                            <div class="receipe-content">
+                                <a href="receipe-post.html">
+                                    <h5>Homemade Breakfast</h5>
+                                </a>
+                                <div class="ratings">
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <!-- Single Best Receipe Area -->
+                    <div class="col-12 col-sm-6 col-lg-4">
+                        <div class="single-best-receipe-area mb-30">
+                            <img src="../static/img/bg-img/r6.jpg" alt="">
+                            <div class="receipe-content">
+                                <a href="receipe-post.html">
+                                    <h5>Healthy Fruit Desert</h5>
+                                </a>
+                                <div class="ratings">
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- ##### Recipe Category Area End ##### -->
+
+    <!-- ##### Footer Area Start ##### -->
+    <footer class="footer-area">
+        <div class="container h-100">
+            <div class="row h-100">
+                <div class="col-12 h-100 d-flex flex-wrap align-items-center justify-content-between">
+                    <!-- Footer Logo -->
+                    <div class="footer-logo">
+                        <a href="{{ url_for('index')}}"><img src="../static/img/bootstrap-logo.svg"  alt="Logo" width="30" height="24"></a>
+                    </div>
+                    <!-- Copywrite -->
+                    <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- ##### Footer Area Start ##### -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script> -->
+    <!-- Active js -->
+    <script src="../static/js/active.js"></script>
+
+  </body>
+</html>

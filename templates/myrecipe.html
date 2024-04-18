@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Wongnok รวมเมนูสูตรอาหาร</title>
+
+    <!-- ##### Include CSS ##### -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <!-- Core Stylesheet -->
+    <link rel="stylesheet" href="../static/css/style.css">
+
+    <!-- ##### Include Font ##### -->
+
+  </head>
+  <body>
+    <!-- ##### Header Area Start ##### -->
+    <nav class="navbar navbar-expand-lg" style="background-color: #e3f2fd;">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{{ url_for('index')}}">
+                <img src="../static/img/bootstrap-logo.svg" alt="Logo" width="30" height="24" class="align-text-top">
+                Wongnok
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+                <div class="collapse navbar-collapse" id="navbarScroll">
+                  <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+                    <li class="nav-item">
+                      <a class="nav-link active" aria-current="page" href="{{ url_for('index')}}">หน้าแรก</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="{{ url_for('search')}}">ค้นหาสูตรอาหาร</a>
+                    </li>
+                    {% if 'loggedin' in session: %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('myrecipe')}}"> สูตรอาหารของฉัน</a>
+                      </li>
+                    {% endif %}
+                  </ul>
+                  <ul class="navbar-nav ml-auto" style="--bs-scroll-height: 100px;">
+                    {% if 'loggedin' in session: %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="../static/img/bootstrap-logo.svg" alt="Logo" width="30" height="24" class="align-text-top">
+                            {{ session['email'] }}
+                        </a>
+                      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{{ url_for('myrecipe')}}">My Recipe</a>
+                        <a class="dropdown-item" href="{{url_for('logout')}}">Log Out</a>
+                      </div>
+                    </li>
+                    {% else: %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('login')}}">
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            Log in
+                        </a>
+                      </li>
+                    {% endif %}   
+                    
+                  </ul>
+                </div>
+              </div>
+        </div>
+    </nav>
+    <!-- ##### Header Area End ##### -->
+
+    <!-- ##### Breadcumb Area Start ##### -->
+
+    <div class="breadcumb-area bg-img bg-overlay mb-30" style="background-image: url(../static/img/bg-img/breadcumb3.jpg);">
+        <div class="container h-100">
+            <div class="row h-100 align-items-center">
+                <div class="col-12">
+                    <div class="breadcumb-text text-center">
+                        <h2>จัดการสูตรอาหาร</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ##### Breadcumb Area End ##### -->
+    
+    <div class="container-fluid">
+      <!-- Add Receipe Part#1 -->
+        <form class="row g-3">
+          <div class="row mb-20">
+            <div class="col-8">
+              <a class="btn btn-primary" href="{{ url_for('addrecipe')}}" role="button"><i class="fa fa-plus" aria-hidden="true"></i> เพิ่มสูตรอาหาร</a>
+            </div>
+            <div class="col-4">
+              <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Search..." aria-label="Recipient's username" aria-describedby="button-addon2">
+                <button class="btn btn-success" type="button" id="button-addon2">
+                  <i class="fa fa-search" aria-hidden="true"></i></button>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <table class="table">
+                  <thead>
+                    <tr>
+                      <th class="col-1" scope="col">ID</th>
+                      <th class="col-2" scope="col">รูปอาหาร</th>
+                      <th class="col-3" scope="col">ชื่อสูตรอาหาร</th>
+                      <th class="col-2" scope="col">หมวดหมู่</th>
+                      <th class="col-2" scope="col">Rating</th>
+                      <th class="col-2" scope="col">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody class="table-group-divider">
+                    {% set map_category={'1':'ต้ม','2':'ทอด','3':'ผัด'} %}
+                    {%for i in range(0, 2)%}
+                    <tr>
+                      <th scope="row">{{i+1}}</th>
+                      <td><img src="../static/img/bg-img/{{o_recipe[i][4]}}" class="rounded" alt="Cinque Terre" width="120" height="120"></td>
+                      <td>{{o_recipe[i][2]}}</td>
+                      <td>{{o_recipe[i][3]}}</td>
+                      <td>
+                        <i class="fa fa-star" aria-hidden="true" style="color: goldenrod;"></i>4.50, 
+                        <i class="fa fa-comments" aria-hidden="true" style="color: goldenrod;"></i>11
+                      </td>
+                      <td>
+                        <button type="submit" class="btn btn-primary">
+                          <i class="fa fa-list" aria-hidden="true"></i></button>
+                        <button type="submit" class="btn btn-warning">
+                          <i class="fa fa-pencil" aria-hidden="true"></i></button>
+                        <button type="submit" class="btn btn-danger">
+                          <i class="fa fa-trash" aria-hidden="true"></i></button>
+                      </td>
+                    </tr>
+                    {%endfor%} 
+                  </tbody>
+                </table>
+            </div>
+          </div>
+        </form> 
+    </div>
+    
+    <!-- ##### Footer Area Start ##### -->
+    <footer class="footer-area">
+        <div class="container h-100">
+            <div class="row h-100">
+                <div class="col-12 h-100 d-flex flex-wrap align-items-center justify-content-between">
+                    <!-- Footer Logo -->
+                    <div class="footer-logo">
+                        <a href="{{ url_for('index')}}"><img src="../static/img/bootstrap-logo.svg"  alt="Logo" width="30" height="24"></a>
+                    </div>
+                    <!-- Copywrite -->
+                    <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- ##### Footer Area Start ##### -->
+    <!-- jQuery-2.2.4 js -->
+    <script src="../static/js/jquery-2.2.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script> -->
+    <!-- Active js -->
+    <script src="../static/js/active.js"></script>
+
+
+  </body>
+</html>

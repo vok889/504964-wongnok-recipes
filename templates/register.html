@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Wongnok รวมเมนูสูตรอาหาร</title>
+
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+
+    <!-- ===== CSS ===== -->
+    <link href="../static/css/css-login.css" rel="stylesheet">
+         
+    <!--<title>Login & Registration Form</title>-->
+</head>
+<body>
+    
+    <div class="container">
+        <div class="forms-signup">
+            <!-- Registration Form -->
+            <div class="form signup">
+
+                <span class="title">ลงทะเบียน</span>
+                <form action="{{ url_for('register')}}" method="post" autocomplete="off">
+                    <div class="msg">{{ msg }}</div>
+                    <div class="input-field">
+                        <input type="text" name="username" placeholder="กรอกชื่อ" class="textbox" id="username" required>
+                        <i class="uil uil-user"></i>
+                    </div>
+                    <div class="input-field">
+                        <input type="text" name="email" placeholder="กรอกอีเมล" class="textbox" id="email" required>
+                        <i class="uil uil-envelope icon"></i>
+                    </div>
+                    <div class="input-field">
+                        <input type="password" name="password"  placeholder="กำหนดรหัสผ่าน" class="password" id="password" required>
+                        <i class="uil uil-lock icon"></i>
+                    </div>
+                    <div class="input-field">
+                        <input type="password" class="password" placeholder="ยืนยันรหัสผ่าน" required>
+                        <i class="uil uil-lock icon"></i>
+                        <i class="uil uil-eye-slash showHidePw"></i>
+                    </div>
+
+                    <div class="checkbox-text">
+                        <div class="checkbox-content">
+                            <input type="checkbox" id="termCon">
+                            <label for="termCon" class="text">ฉันยอมรับเงื่อนไขในการเป็นสมาชิก</label>
+                        </div>
+                    </div>
+
+                    <div class="input-field button">
+                        <input type="submit" value="ลงทะเบียน">
+                    </div>
+                </form>
+
+                <div class="login-signup">
+                    <span class="text">ฉันเป็นสมาชิกแล้ว?
+                        <a href="{{ url_for('login')}}" class="text">ลงชื่อเข้าใช้</a>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../static/js/js-login.js"></script>
+</body>
+</html>
